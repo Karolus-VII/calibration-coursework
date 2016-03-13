@@ -1,0 +1,22 @@
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\Calibration Interface.exe.config
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration Interface.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.MeCS.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Print_Report.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Properties.Resources.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Set_Time.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration Interface.csproj.GenerateResource.Cache
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\Calibration Interface.exe
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\Calibration Interface.pdb
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration Interface.exe
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration Interface.pdb
+D:\Documents\Visual Studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Customer_Form.resources
+D:\Documents\Visual Studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Calibration_Interface1.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Calibration_Interface2.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Calibration_Interface3.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\obj\Debug\Calibration_Interface.Calibration_Interface4.resources
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDBDataSet.Designer.cs
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDBDataSet.xsc
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDBDataSet.xsd
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDBDataSet.xss
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDB.mdf
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDB_log.ldf
