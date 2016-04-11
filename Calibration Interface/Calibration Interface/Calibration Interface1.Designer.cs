@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.elapsedTime = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -68,9 +71,12 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.dtList = new System.Windows.Forms.ListBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label24 = new System.Windows.Forms.Label();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
@@ -103,8 +109,9 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.tempReader = new System.Windows.Forms.Timer(this.components);
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.dataTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -112,6 +119,7 @@
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel9.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -140,6 +148,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.elapsedTime);
+            this.groupBox2.Controls.Add(this.label29);
             this.groupBox2.Controls.Add(this.textBox10);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
@@ -164,6 +174,24 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sensor Readings";
+            // 
+            // elapsedTime
+            // 
+            this.elapsedTime.AutoSize = true;
+            this.elapsedTime.Location = new System.Drawing.Point(242, 247);
+            this.elapsedTime.Name = "elapsedTime";
+            this.elapsedTime.Size = new System.Drawing.Size(15, 16);
+            this.elapsedTime.TabIndex = 25;
+            this.elapsedTime.Text = "0";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(9, 247);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(52, 16);
+            this.label29.TabIndex = 0;
+            this.label29.Text = "label29";
             // 
             // textBox10
             // 
@@ -208,7 +236,6 @@
             this.label9.Size = new System.Drawing.Size(106, 16);
             this.label9.TabIndex = 20;
             this.label9.Text = "Mass/Volume:";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label8
             // 
@@ -391,6 +418,7 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "Stop Calibration";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox2
             // 
@@ -469,6 +497,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Start Calibration";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox1
             // 
@@ -507,6 +536,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.dtList);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
@@ -515,6 +545,16 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Data Table";
+            // 
+            // dtList
+            // 
+            this.dtList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtList.FormattingEnabled = true;
+            this.dtList.ItemHeight = 16;
+            this.dtList.Location = new System.Drawing.Point(3, 18);
+            this.dtList.Name = "dtList";
+            this.dtList.Size = new System.Drawing.Size(839, 479);
+            this.dtList.TabIndex = 0;
             // 
             // panel6
             // 
@@ -562,6 +602,25 @@
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Customer Information";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(305, 22);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(125, 16);
+            this.label28.TabIndex = 53;
+            this.label28.Text = "Select Customer:";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(308, 47);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(166, 196);
+            this.listBox1.TabIndex = 52;
             // 
             // label24
             // 
@@ -850,24 +909,14 @@
             this.label12.TabIndex = 24;
             this.label12.Text = "Model Name:";
             // 
-            // listBox1
+            // serialPort1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(308, 47);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(166, 196);
-            this.listBox1.TabIndex = 52;
+            this.serialPort1.PortName = "COM3";
             // 
-            // label28
+            // dataTimer
             // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(305, 22);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(125, 16);
-            this.label28.TabIndex = 53;
-            this.label28.Text = "Select Customer:";
+            this.dataTimer.Interval = 1000;
+            this.dataTimer.Tick += new System.EventHandler(this.dataTimer_Tick);
             // 
             // Calibration_Interface1
             // 
@@ -886,6 +935,7 @@
             this.groupBox1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
@@ -976,5 +1026,11 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Timer tempReader;
+        private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Timer dataTimer;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label elapsedTime;
+        private System.Windows.Forms.ListBox dtList;
     }
 }

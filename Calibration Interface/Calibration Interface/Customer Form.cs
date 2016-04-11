@@ -27,6 +27,7 @@ namespace Calibration_Interface
             connectionString1 = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Documents\Visual Studio 2015\Projects\Calibration Interface\Calibration Interface\CustomerDB.mdf;Integrated Security=True";
 
             PopulateCustomerList();
+            PopulateComboBox();
 
         }
 
@@ -81,6 +82,23 @@ namespace Calibration_Interface
 
                 }
                 reader.Close();
+            }
+        }
+
+        private void PopulateComboBox()
+        {
+            string Query3 = "SELECT * FROM States";
+
+            using (connection = new SqlConnection(connectionString1))
+            using (adapter = new SqlDataAdapter(Query3, connection))
+            {
+                DataTable customerTable = new DataTable();
+                adapter.Fill(customerTable);
+
+                steBox2.DisplayMember = "Name";
+                steBox2.ValueMember = "Id";
+                steBox2.DataSource = customerTable;
+
             }
         }
 
@@ -140,10 +158,12 @@ namespace Calibration_Interface
 
         private void updtBtn_Click(object sender, EventArgs e)
         {
-            string Query3 = "UPDATE CustomerInfo SET Customer_Name = @cust, Address_1 = @add1, Address_2 = @add2, Address_3 = @add3, State = @ste, Postal_Code = @pst, Phone_Number_1 = @phn1, Phone_Number_2 = @phn2, Fax_Number = @fx, Email_Address = @email, Website = @web";
+            string Query4 = "UPDATE CustomerInfo SET Customer_Name = @cust, Address_1 = @add1, Address_2 = @add2, Address_3 = @add3, State = @ste, Postal_Code = @pst, Phone_Number_1 = @phn1, Phone_Number_2 = @phn2, Fax_Number = @fx, Email_Address = @email, Website = @web WHERE Customer_Name = @cust";
 
-            using (connection = new SqlConnection(connectionString1))
-            using (command = new SqlCommand(Query3, connection))
+            connection = new SqlConnection(connectionString1);
+            command = new SqlCommand(Query4, connection);
+
+            try
             {
                 connection.Open();
 
@@ -159,8 +179,17 @@ namespace Calibration_Interface
                 command.Parameters.Add("@email", SqlDbType.NVarChar, 50).Value = emailBox1.Text;
                 command.Parameters.Add("@web", SqlDbType.NVarChar, 50).Value = wbBox1.Text;
 
-                command.ExecuteNonQuery();
+                reader = command.ExecuteReader();
 
+                while (reader.Read())
+                {
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
             PopulateCustomerList();

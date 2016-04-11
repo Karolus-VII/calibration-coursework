@@ -94,7 +94,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1164, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1203, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolStripProgressBar1
