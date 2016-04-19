@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,10 @@ namespace Calibration_Interface
 
         string connectionString1;
 
+        SerialPort port1 = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
+        SerialPort port2 = new SerialPort("COM6", 9600, Parity.None, 8, StopBits.One);
+
+
         public Calibration_Interface1()
         {
             InitializeComponent();
@@ -37,26 +42,45 @@ namespace Calibration_Interface
             panel4.BackColor = Color.White;
             panel5.BackColor = Color.White;
             panel6.BackColor = Color.White;
-            
+
+            //port1.Open();
+                        
+            port2.Encoding = Encoding.ASCII;
+            port2.Handshake = Handshake.None;
+            port2.RtsEnable = true;
+            port2.ReceivedBytesThreshold = 1;
         }
 
         private void insertData()
         {
-            string Query2 = "INSERT INTO DataSet(Mass, Time, Nominal_Flow_Rate, Actual_Flow_Rate, Uncertainty) VALUES (@mass, @time, @nflow, @aflow, @uncr)";
-            
+            string Query2 = "INSERT INTO DataSet(Mass, Nominal_Flow_Rate, Actual_Flow_Rate, Uncertainty) VALUES (@mass, @nflow, @aflow, @uncr)";
+                        
             using (connection = new SqlConnection(connectionString1))
             using (command = new SqlCommand(Query2, connection))
             {
                 connection.Open();
 
-                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
+                try
+                {
+                    var massData = port2.ReadLine();
+                    if (!string.IsNullOrEmpty(massData))
+                    {
+                        command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massData.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
                 command.Parameters.Add("@time", SqlDbType.NVarChar, 50).Value = secBox.Text;
                 command.Parameters.Add("@nflow", SqlDbType.NVarChar, 50).Value = nflowBox.Text;
                 command.Parameters.Add("@aflow", SqlDbType.NVarChar, 50).Value = aflowBox.Text;
                 command.Parameters.Add("@uncr", SqlDbType.NVarChar, 50).Value = uncrBox.Text;
 
                 command.ExecuteNonQuery();
-            }            
+            }
+                        
         }
 
         private void populate_rdDataGrid()
@@ -119,30 +143,27 @@ namespace Calibration_Interface
 
         private void snsrBtn_Click(object sender, EventArgs e)
         {
-            serialPort1.Open();
-            try
-            {
-                if (serialPort1.IsOpen)
-                {                    
-                    serialPort1.WriteLine("T");
-                    int temp1 = (int)(Math.Round(Convert.ToDecimal(serialPort1.ReadLine()), 0));
-                    textBox5.Text = temp1.ToString();
-
-                    serialPort1.WriteLine("t");
-                    int temp2 = (int)(Math.Round(Convert.ToDecimal(serialPort1.ReadLine()), 0));
-                    textBox3.Text = temp2.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            serialPort1.Close();
+            //try
+            //{
+            //    if (port1.IsOpen)
+            //    {
+            //        port1.WriteLine("T");
+            //        textBox5.Text = port1.ReadLine();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //port1.Close();
         }
 
         private void tbBtn_Click(object sender, EventArgs e)
         {
+            port2.Open();
             insertData();
+            port2.Close();
+
             populate_rdDataGrid();
         }
 

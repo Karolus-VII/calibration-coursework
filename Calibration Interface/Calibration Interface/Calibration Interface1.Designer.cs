@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -114,7 +113,6 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -966,10 +964,6 @@
             this.label12.TabIndex = 24;
             this.label12.Text = "Model Name:";
             // 
-            // serialPort1
-            // 
-            this.serialPort1.PortName = "COM3";
-            // 
             // Calibration_Interface1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1078,7 +1072,6 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ListBox cstBox1;
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button tbBtn;
         private System.Windows.Forms.TextBox secBox;
