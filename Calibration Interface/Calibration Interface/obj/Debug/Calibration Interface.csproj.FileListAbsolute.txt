@@ -20,3 +20,4 @@ d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Inter
 d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDBDataSet.xss
 d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDB.mdf
 d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\CustomerDB_log.ldf
+d:\documents\visual studio 2015\Projects\Calibration Interface\Calibration Interface\bin\Debug\MySql.Data.dll

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Data.SqlClient;
 
+
 namespace Calibration_Interface
 {
     public partial class Customer_Form : Form
@@ -54,6 +55,7 @@ namespace Calibration_Interface
                 cstBox.DataSource = customerTable;
 
             }
+
         }
 
         private void PopulateTextBoxes()
@@ -83,6 +85,7 @@ namespace Calibration_Interface
                 }
                 reader.Close();
             }
+
         }
 
         private void PopulateComboBox()
@@ -116,7 +119,7 @@ namespace Calibration_Interface
         private void saveBtn_Click(object sender, EventArgs e)
         {
             string Query3 = "INSERT INTO CustomerInfo (Customer_Name, Address_1, Address_2, Address_3, State, Postal_Code, Phone_Number_1, Phone_Number_2, Fax_Number, Email_Address, Website)" +
-                        "VALUES (@Customer_Name, @Address_1, @Address_2, @Address_3,@State, @Postal_Code, @Phone_Number_1, @Phone_Number_2, @Fax_Number, @Email_Address, @Website)";
+                        "VALUES (@Customer_Name, @Address_1, @Address_2, @Address_3, @State, @Postal_Code, @Phone_Number_1, @Phone_Number_2, @Fax_Number, @Email_Address, @Website)";
             
             using (connection = new SqlConnection(connectionString1))
             using (command = new SqlCommand(Query3, connection))
@@ -206,6 +209,42 @@ namespace Calibration_Interface
             fxBox2.Text = "";
             emailBox2.Text = "";
             wbBox2.Text = "";
+        }
+
+        private void delBtn_Click(object sender, EventArgs e)
+        {
+            string Query5 = "DELETE FROM CustomerInfo WHERE [Customer_Name]='" + nmeBox1.Text + "' ";
+
+            try
+            {
+                using (connection = new SqlConnection(connectionString1))
+                {
+                    connection.Open();
+                    using (command = new SqlCommand(Query5, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            PopulateCustomerList();
+
+            nmeBox1.Text = "";
+            addrsBox1.Text = "";
+            addrsBox2.Text = "";
+            addrsBox3.Text = "";
+            steBox.Text = "";
+            pstBox1.Text = "";
+            phneBox1.Text = "";
+            phneBox2.Text = "";
+            fxBox1.Text = "";
+            emailBox1.Text = "";
+            wbBox1.Text = "";
         }
     }
 }

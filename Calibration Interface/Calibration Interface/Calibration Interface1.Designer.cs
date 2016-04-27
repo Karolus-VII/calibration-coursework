@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.clearBtn = new System.Windows.Forms.Button();
+            this.stopBtn = new System.Windows.Forms.Button();
+            this.label30 = new System.Windows.Forms.Label();
+            this.massBox = new System.Windows.Forms.TextBox();
             this.aflowBox = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.uncrtBtn = new System.Windows.Forms.Button();
-            this.tbBtn = new System.Windows.Forms.Button();
+            this.startBtn = new System.Windows.Forms.Button();
             this.uncrBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -44,12 +49,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.massBox = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.humidBox2 = new System.Windows.Forms.TextBox();
+            this.humidBox1 = new System.Windows.Forms.TextBox();
+            this.tempairBox2 = new System.Windows.Forms.TextBox();
+            this.tempairBox1 = new System.Windows.Forms.TextBox();
+            this.tempBox2 = new System.Windows.Forms.TextBox();
+            this.tempBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.snsrBtn = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -113,6 +118,11 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.massTimer = new System.Windows.Forms.Timer(this.components);
+            this.port1 = new System.IO.Ports.SerialPort(this.components);
+            this.port2 = new System.IO.Ports.SerialPort(this.components);
+            this.dataTimer = new System.Windows.Forms.Timer(this.components);
+            this.sensorTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -150,10 +160,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.clearBtn);
+            this.groupBox2.Controls.Add(this.stopBtn);
+            this.groupBox2.Controls.Add(this.label30);
+            this.groupBox2.Controls.Add(this.massBox);
             this.groupBox2.Controls.Add(this.aflowBox);
             this.groupBox2.Controls.Add(this.label32);
             this.groupBox2.Controls.Add(this.uncrtBtn);
-            this.groupBox2.Controls.Add(this.tbBtn);
+            this.groupBox2.Controls.Add(this.startBtn);
             this.groupBox2.Controls.Add(this.uncrBox);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
@@ -163,12 +177,12 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.massBox);
-            this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.textBox6);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.textBox3);
+            this.groupBox2.Controls.Add(this.humidBox2);
+            this.groupBox2.Controls.Add(this.humidBox1);
+            this.groupBox2.Controls.Add(this.tempairBox2);
+            this.groupBox2.Controls.Add(this.tempairBox1);
+            this.groupBox2.Controls.Add(this.tempBox2);
+            this.groupBox2.Controls.Add(this.tempBox1);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.snsrBtn);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -178,12 +192,53 @@
             this.groupBox2.Size = new System.Drawing.Size(300, 500);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Sensor Readings";
+            this.groupBox2.Text = "Sensor Readings and Calibration Controls";
+            // 
+            // clearBtn
+            // 
+            this.clearBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearBtn.Location = new System.Drawing.Point(174, 333);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(120, 26);
+            this.clearBtn.TabIndex = 32;
+            this.clearBtn.Text = "Clear Table";
+            this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
+            // 
+            // stopBtn
+            // 
+            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopBtn.Location = new System.Drawing.Point(174, 301);
+            this.stopBtn.Name = "stopBtn";
+            this.stopBtn.Size = new System.Drawing.Size(120, 26);
+            this.stopBtn.TabIndex = 31;
+            this.stopBtn.Text = "Stop";
+            this.stopBtn.UseVisualStyleBackColor = true;
+            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(6, 192);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(117, 16);
+            this.label30.TabIndex = 30;
+            this.label30.Text = "Mass collected:";
+            // 
+            // massBox
+            // 
+            this.massBox.Location = new System.Drawing.Point(174, 189);
+            this.massBox.Name = "massBox";
+            this.massBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.massBox.Size = new System.Drawing.Size(120, 22);
+            this.massBox.TabIndex = 29;
             // 
             // aflowBox
             // 
-            this.aflowBox.Location = new System.Drawing.Point(174, 217);
+            this.aflowBox.Location = new System.Drawing.Point(174, 245);
             this.aflowBox.Name = "aflowBox";
+            this.aflowBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.aflowBox.Size = new System.Drawing.Size(120, 22);
             this.aflowBox.TabIndex = 28;
             // 
@@ -191,7 +246,7 @@
             // 
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(6, 220);
+            this.label32.Location = new System.Drawing.Point(6, 248);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(128, 16);
             this.label32.TabIndex = 27;
@@ -200,29 +255,30 @@
             // uncrtBtn
             // 
             this.uncrtBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uncrtBtn.Location = new System.Drawing.Point(3, 304);
+            this.uncrtBtn.Location = new System.Drawing.Point(6, 365);
             this.uncrtBtn.Name = "uncrtBtn";
-            this.uncrtBtn.Size = new System.Drawing.Size(165, 25);
+            this.uncrtBtn.Size = new System.Drawing.Size(291, 26);
             this.uncrtBtn.TabIndex = 26;
             this.uncrtBtn.Text = "Calculate Uncertainty";
             this.uncrtBtn.UseVisualStyleBackColor = true;
             this.uncrtBtn.Click += new System.EventHandler(this.uncrtBtn_Click);
             // 
-            // tbBtn
+            // startBtn
             // 
-            this.tbBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbBtn.Location = new System.Drawing.Point(174, 273);
-            this.tbBtn.Name = "tbBtn";
-            this.tbBtn.Size = new System.Drawing.Size(120, 56);
-            this.tbBtn.TabIndex = 25;
-            this.tbBtn.Text = "Tabulate";
-            this.tbBtn.UseVisualStyleBackColor = true;
-            this.tbBtn.Click += new System.EventHandler(this.tbBtn_Click);
+            this.startBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startBtn.Location = new System.Drawing.Point(3, 301);
+            this.startBtn.Name = "startBtn";
+            this.startBtn.Size = new System.Drawing.Size(165, 26);
+            this.startBtn.TabIndex = 25;
+            this.startBtn.Text = "Start";
+            this.startBtn.UseVisualStyleBackColor = true;
+            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
             // uncrBox
             // 
-            this.uncrBox.Location = new System.Drawing.Point(174, 245);
+            this.uncrBox.Location = new System.Drawing.Point(174, 273);
             this.uncrBox.Name = "uncrBox";
+            this.uncrBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.uncrBox.Size = new System.Drawing.Size(120, 22);
             this.uncrBox.TabIndex = 24;
             // 
@@ -230,7 +286,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 248);
+            this.label11.Location = new System.Drawing.Point(6, 276);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(145, 16);
             this.label11.TabIndex = 23;
@@ -240,7 +296,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 192);
+            this.label10.Location = new System.Drawing.Point(6, 220);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(87, 16);
             this.label10.TabIndex = 22;
@@ -248,8 +304,9 @@
             // 
             // tmeBox
             // 
-            this.tmeBox.Location = new System.Drawing.Point(174, 189);
+            this.tmeBox.Location = new System.Drawing.Point(174, 217);
             this.tmeBox.Name = "tmeBox";
+            this.tmeBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tmeBox.Size = new System.Drawing.Size(120, 22);
             this.tmeBox.TabIndex = 21;
             // 
@@ -259,9 +316,9 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(6, 164);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(106, 16);
+            this.label9.Size = new System.Drawing.Size(84, 16);
             this.label9.TabIndex = 20;
-            this.label9.Text = "Mass/Volume:";
+            this.label9.Text = "Humidity 2:";
             // 
             // label8
             // 
@@ -269,9 +326,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(6, 136);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 16);
+            this.label8.Size = new System.Drawing.Size(84, 16);
             this.label8.TabIndex = 19;
-            this.label8.Text = "Humidity:";
+            this.label8.Text = "Humidity 1:";
             // 
             // label7
             // 
@@ -279,9 +336,9 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(6, 108);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 16);
+            this.label7.Size = new System.Drawing.Size(146, 16);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Pressure (Air):";
+            this.label7.Text = "Temperature 2 (Air):";
             // 
             // label6
             // 
@@ -289,9 +346,9 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(6, 80);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(134, 16);
+            this.label6.Size = new System.Drawing.Size(146, 16);
             this.label6.TabIndex = 17;
-            this.label6.Text = "Temperature (Air):";
+            this.label6.Text = "Temperature 1 (Air):";
             // 
             // label5
             // 
@@ -299,51 +356,57 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(6, 52);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(130, 16);
+            this.label5.Size = new System.Drawing.Size(169, 16);
             this.label5.TabIndex = 16;
-            this.label5.Text = "Pressure (Liquid):";
+            this.label5.Text = "Temperature 2 (Liquid):";
             // 
-            // massBox
+            // humidBox2
             // 
-            this.massBox.Location = new System.Drawing.Point(174, 161);
-            this.massBox.Name = "massBox";
-            this.massBox.Size = new System.Drawing.Size(120, 22);
-            this.massBox.TabIndex = 15;
+            this.humidBox2.Location = new System.Drawing.Point(174, 161);
+            this.humidBox2.Name = "humidBox2";
+            this.humidBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.humidBox2.Size = new System.Drawing.Size(120, 22);
+            this.humidBox2.TabIndex = 15;
             // 
-            // textBox7
+            // humidBox1
             // 
-            this.textBox7.Location = new System.Drawing.Point(174, 133);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(120, 22);
-            this.textBox7.TabIndex = 14;
+            this.humidBox1.Location = new System.Drawing.Point(174, 133);
+            this.humidBox1.Name = "humidBox1";
+            this.humidBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.humidBox1.Size = new System.Drawing.Size(120, 22);
+            this.humidBox1.TabIndex = 14;
             // 
-            // textBox6
+            // tempairBox2
             // 
-            this.textBox6.Location = new System.Drawing.Point(174, 105);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(120, 22);
-            this.textBox6.TabIndex = 13;
+            this.tempairBox2.Location = new System.Drawing.Point(174, 105);
+            this.tempairBox2.Name = "tempairBox2";
+            this.tempairBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tempairBox2.Size = new System.Drawing.Size(120, 22);
+            this.tempairBox2.TabIndex = 13;
             // 
-            // textBox5
+            // tempairBox1
             // 
-            this.textBox5.Location = new System.Drawing.Point(174, 77);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(120, 22);
-            this.textBox5.TabIndex = 12;
+            this.tempairBox1.Location = new System.Drawing.Point(174, 77);
+            this.tempairBox1.Name = "tempairBox1";
+            this.tempairBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tempairBox1.Size = new System.Drawing.Size(120, 22);
+            this.tempairBox1.TabIndex = 12;
             // 
-            // textBox4
+            // tempBox2
             // 
-            this.textBox4.Location = new System.Drawing.Point(174, 49);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(120, 22);
-            this.textBox4.TabIndex = 11;
+            this.tempBox2.Location = new System.Drawing.Point(174, 49);
+            this.tempBox2.Name = "tempBox2";
+            this.tempBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tempBox2.Size = new System.Drawing.Size(120, 22);
+            this.tempBox2.TabIndex = 11;
             // 
-            // textBox3
+            // tempBox1
             // 
-            this.textBox3.Location = new System.Drawing.Point(174, 21);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(120, 22);
-            this.textBox3.TabIndex = 10;
+            this.tempBox1.Location = new System.Drawing.Point(174, 21);
+            this.tempBox1.Name = "tempBox1";
+            this.tempBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tempBox1.Size = new System.Drawing.Size(120, 22);
+            this.tempBox1.TabIndex = 10;
             // 
             // label4
             // 
@@ -351,16 +414,16 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(6, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(157, 16);
+            this.label4.Size = new System.Drawing.Size(169, 16);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Temperature (Liquid):";
+            this.label4.Text = "Temperature 1 (Liquid):";
             // 
             // snsrBtn
             // 
             this.snsrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.snsrBtn.Location = new System.Drawing.Point(3, 273);
+            this.snsrBtn.Location = new System.Drawing.Point(3, 333);
             this.snsrBtn.Name = "snsrBtn";
-            this.snsrBtn.Size = new System.Drawing.Size(165, 25);
+            this.snsrBtn.Size = new System.Drawing.Size(165, 26);
             this.snsrBtn.TabIndex = 0;
             this.snsrBtn.Text = "Get Sensor Readings";
             this.snsrBtn.UseVisualStyleBackColor = true;
@@ -401,7 +464,7 @@
             this.groupBox1.Size = new System.Drawing.Size(300, 250);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Calibration Controls";
+            this.groupBox1.Text = "Calibration Information";
             // 
             // nflowBox
             // 
@@ -964,6 +1027,27 @@
             this.label12.TabIndex = 24;
             this.label12.Text = "Model Name:";
             // 
+            // massTimer
+            // 
+            this.massTimer.Enabled = true;
+            this.massTimer.Tick += new System.EventHandler(this.massTimer_Tick);
+            // 
+            // port1
+            // 
+            this.port1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.port1_DataReceived);
+            // 
+            // port2
+            // 
+            this.port2.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.port2_DataReceived);
+            // 
+            // dataTimer
+            // 
+            this.dataTimer.Tick += new System.EventHandler(this.dataTimer_Tick);
+            // 
+            // sensorTimer
+            // 
+            this.sensorTimer.Tick += new System.EventHandler(this.sensorTimer_Tick);
+            // 
             // Calibration_Interface1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1017,12 +1101,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox massBox;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox humidBox2;
+        private System.Windows.Forms.TextBox humidBox1;
+        private System.Windows.Forms.TextBox tempairBox2;
+        private System.Windows.Forms.TextBox tempairBox1;
+        private System.Windows.Forms.TextBox tempBox2;
+        private System.Windows.Forms.TextBox tempBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox uncrBox;
         private System.Windows.Forms.Label label11;
@@ -1073,7 +1157,7 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ListBox cstBox1;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Button tbBtn;
+        private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.TextBox secBox;
         private System.Windows.Forms.Button uncrtBtn;
         private System.Windows.Forms.TextBox aflowBox;
@@ -1081,5 +1165,14 @@
         private System.Windows.Forms.TextBox nflowBox;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.DataGridView rdDataGrid;
+        private System.Windows.Forms.Timer massTimer;
+        private System.IO.Ports.SerialPort port1;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox massBox;
+        private System.IO.Ports.SerialPort port2;
+        private System.Windows.Forms.Timer dataTimer;
+        private System.Windows.Forms.Button stopBtn;
+        private System.Windows.Forms.Button clearBtn;
+        private System.Windows.Forms.Timer sensorTimer;
     }
 }

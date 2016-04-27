@@ -22,8 +22,8 @@ namespace Calibration_Interface
 
         string connectionString1;
 
-        SerialPort port1 = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
-        SerialPort port2 = new SerialPort("COM6", 9600, Parity.None, 8, StopBits.One);
+        //SerialPort port1 = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
+        //SerialPort port2 = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
 
 
         public Calibration_Interface1()
@@ -43,12 +43,40 @@ namespace Calibration_Interface
             panel5.BackColor = Color.White;
             panel6.BackColor = Color.White;
 
-            //port1.Open();
-                        
+            port1.PortName = "COM3";
+            port1.BaudRate = 9600;
+            port1.Parity = Parity.None;
+            port1.StopBits = StopBits.One;
+            port1.ReadTimeout = 10000;
+
+            try
+            {
+                port1.Open();
+            }
+            catch (Exception ex1)
+            {
+                MessageBox.Show(ex1.Message);
+            }
+
+            port2.PortName = "COM7";
+            port2.BaudRate = 9600;
+            port2.Parity = Parity.None;
+            port2.StopBits = StopBits.One;
+            port2.ReadTimeout = 10000;
             port2.Encoding = Encoding.ASCII;
             port2.Handshake = Handshake.None;
             port2.RtsEnable = true;
             port2.ReceivedBytesThreshold = 1;
+
+            try
+            {
+                port2.Open();
+            }
+            catch (Exception ex2)
+            {
+                MessageBox.Show(ex2.Message);
+            }
+
         }
 
         private void insertData()
@@ -60,29 +88,74 @@ namespace Calibration_Interface
             {
                 connection.Open();
 
-                try
-                {
-                    var massData = port2.ReadLine();
-                    if (!string.IsNullOrEmpty(massData))
-                    {
-                        command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massData.ToString();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                
+                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;                
                 command.Parameters.Add("@time", SqlDbType.NVarChar, 50).Value = secBox.Text;
                 command.Parameters.Add("@nflow", SqlDbType.NVarChar, 50).Value = nflowBox.Text;
                 command.Parameters.Add("@aflow", SqlDbType.NVarChar, 50).Value = aflowBox.Text;
                 command.Parameters.Add("@uncr", SqlDbType.NVarChar, 50).Value = uncrBox.Text;
-
+            
                 command.ExecuteNonQuery();
             }
                         
         }
 
+        private void captureSensorData(object s, EventArgs e)
+        {
+            //String sensorData = port1.ReadLine().ToString();
+            //String[] sensorTempHumid = sensorData.Split(',');
+
+            //var temp1 = sensorTempHumid[0];
+            //var temp2 = sensorTempHumid[1];
+            //var temp3 = sensorTempHumid[2];
+            //var humid1 = sensorTempHumid[3];
+            //var humid2 = sensorTempHumid[4];
+
+            //try
+            //{
+            //    if (port1.IsOpen)
+            //    {
+            //        tempBox1.Text = temp1.ToString();
+            //        tempairBox1.Text = temp2.ToString();
+            //        tempairBox2.Text = temp3.ToString();
+            //        humidBox1.Text = humid1.ToString();
+            //        humidBox2.Text = humid2.ToString();
+            //    }
+            //}
+            //catch (IndexOutOfRangeException ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    throw new ArgumentOutOfRangeException(ex.Message);
+            //}
+        }
+
+        private void captureMassData(object s, EventArgs e)
+        {
+            //var massData = port2.ReadLine();
+            //try
+            //{
+            //    if (!string.IsNullOrEmpty(massData))
+            //    {
+            //        massBox.Text = massData.ToString();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+        }
+
+        private void port1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            //Invoke(new EventHandler(captureSensorData));
+            Invoke(new EventHandler(sensorTimer_Tick));
+        }
+
+        private void port2_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            //Invoke(new EventHandler(captureMassData));
+            Invoke(new EventHandler(massTimer_Tick));
+        }
         private void populate_rdDataGrid()
         {
             string Query3 = "SELECT * FROM DataSet";
@@ -141,40 +214,105 @@ namespace Calibration_Interface
             }
         }
 
-        private void snsrBtn_Click(object sender, EventArgs e)
+        private void startBtn_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    if (port1.IsOpen)
-            //    {
-            //        port1.WriteLine("T");
-            //        textBox5.Text = port1.ReadLine();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-            //port1.Close();
+            Invoke(new EventHandler(dataTimer_Tick));
+            dataTimer.Start();
+        }
+        
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+            dataTimer.Stop();
         }
 
-        private void tbBtn_Click(object sender, EventArgs e)
+        private void clearBtn_Click(object sender, EventArgs e)
         {
-            port2.Open();
-            insertData();
-            port2.Close();
+            string Query3 = "TRUNCATE TABLE DataSet";
+
+            using (connection = new SqlConnection(connectionString1))
+            {
+                command = new SqlCommand(Query3, connection);
+                connection.Open();
+
+                command.ExecuteNonQuery();
+            }
+            connection.Close();
 
             populate_rdDataGrid();
         }
 
+        private void snsrBtn_Click(object sender, EventArgs e)
+        {
+            sensorTimer.Start();
+        }
+
         private void uncrtBtn_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void cstBox1_MouseClick(object sender, MouseEventArgs e)
         {
             PopulateTextBoxes();
+        }
+
+        private void massTimer_Tick(object sender, EventArgs e)
+        {
+            massTimer.Interval = 1000;
+
+            var massData = port2.ReadLine();
+            try
+            {
+                if (!string.IsNullOrEmpty(massData))
+                {
+                    massBox.Text = massData.ToString();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void sensorTimer_Tick(object sender, EventArgs e)
+        {
+            sensorTimer.Interval = 10000;
+            port1.WriteLine("S");
+
+            String sensorData = port1.ReadLine().ToString();
+            String[] sensorTempHumid = sensorData.Split(',');
+
+            var temp1 = sensorTempHumid[0];
+            var temp2 = sensorTempHumid[1];
+            var temp3 = sensorTempHumid[2];
+            var humid1 = sensorTempHumid[3];
+            var humid2 = sensorTempHumid[4];
+
+            try
+            {
+                if (port1.IsOpen)
+                {
+                    tempBox1.Text = temp1.ToString();
+                    tempairBox1.Text = temp2.ToString();
+                    tempairBox2.Text = temp3.ToString();
+                    humidBox1.Text = humid1.ToString();
+                    humidBox2.Text = humid2.ToString();
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw new ArgumentOutOfRangeException(ex.Message);
+            }
+        }
+
+        private void dataTimer_Tick(object sender, EventArgs e)
+        {
+            dataTimer.Interval = 1000;
+            
+            insertData();
+            populate_rdDataGrid();
         }
     }
 }

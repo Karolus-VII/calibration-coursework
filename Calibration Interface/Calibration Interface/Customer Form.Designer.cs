@@ -86,6 +86,7 @@
             this.nmeBox2 = new System.Windows.Forms.TextBox();
             this.addrsBox4 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.delBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -144,7 +145,7 @@
             // cnlBtn
             // 
             this.cnlBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cnlBtn.Location = new System.Drawing.Point(423, 83);
+            this.cnlBtn.Location = new System.Drawing.Point(423, 114);
             this.cnlBtn.Name = "cnlBtn";
             this.cnlBtn.Size = new System.Drawing.Size(140, 25);
             this.cnlBtn.TabIndex = 1;
@@ -429,6 +430,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.delBtn);
             this.panel4.Controls.Add(this.button4);
             this.panel4.Controls.Add(this.panel7);
             this.panel4.Controls.Add(this.saveBtn);
@@ -659,6 +661,17 @@
             this.label10.TabIndex = 21;
             this.label10.Text = "Name:";
             // 
+            // delBtn
+            // 
+            this.delBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.delBtn.Location = new System.Drawing.Point(423, 83);
+            this.delBtn.Name = "delBtn";
+            this.delBtn.Size = new System.Drawing.Size(140, 25);
+            this.delBtn.TabIndex = 24;
+            this.delBtn.Text = "Delete";
+            this.delBtn.UseVisualStyleBackColor = true;
+            this.delBtn.Click += new System.EventHandler(this.delBtn_Click);
+            // 
             // Customer_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -749,5 +762,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox steBox;
+        private System.Windows.Forms.Button delBtn;
     }
 }
