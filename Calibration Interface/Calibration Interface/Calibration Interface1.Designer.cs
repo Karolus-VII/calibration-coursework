@@ -32,18 +32,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.prntBtn = new System.Windows.Forms.Button();
             this.clearBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.massBox = new System.Windows.Forms.TextBox();
-            this.aflowBox = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.uncrtBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
-            this.uncrBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tmeBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -59,6 +53,7 @@
             this.snsrBtn = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.thermBox = new System.Windows.Forms.TextBox();
             this.nflowBox = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.secBox = new System.Windows.Forms.TextBox();
@@ -70,11 +65,9 @@
             this.label25 = new System.Windows.Forms.Label();
             this.maxfBox = new System.Windows.Forms.TextBox();
             this.minfBox = new System.Windows.Forms.TextBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.stdBox = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -160,18 +153,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.prntBtn);
             this.groupBox2.Controls.Add(this.clearBtn);
             this.groupBox2.Controls.Add(this.stopBtn);
             this.groupBox2.Controls.Add(this.label30);
             this.groupBox2.Controls.Add(this.massBox);
-            this.groupBox2.Controls.Add(this.aflowBox);
-            this.groupBox2.Controls.Add(this.label32);
-            this.groupBox2.Controls.Add(this.uncrtBtn);
             this.groupBox2.Controls.Add(this.startBtn);
-            this.groupBox2.Controls.Add(this.uncrBox);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.tmeBox);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
@@ -194,12 +181,23 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sensor Readings and Calibration Controls";
             // 
+            // prntBtn
+            // 
+            this.prntBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prntBtn.Location = new System.Drawing.Point(6, 281);
+            this.prntBtn.Name = "prntBtn";
+            this.prntBtn.Size = new System.Drawing.Size(165, 58);
+            this.prntBtn.TabIndex = 33;
+            this.prntBtn.Text = "Print Report";
+            this.prntBtn.UseVisualStyleBackColor = true;
+            this.prntBtn.Click += new System.EventHandler(this.prntBtn_Click);
+            // 
             // clearBtn
             // 
             this.clearBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearBtn.Location = new System.Drawing.Point(174, 333);
+            this.clearBtn.Location = new System.Drawing.Point(174, 345);
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(120, 26);
+            this.clearBtn.Size = new System.Drawing.Size(120, 58);
             this.clearBtn.TabIndex = 32;
             this.clearBtn.Text = "Clear Table";
             this.clearBtn.UseVisualStyleBackColor = true;
@@ -208,9 +206,9 @@
             // stopBtn
             // 
             this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopBtn.Location = new System.Drawing.Point(174, 301);
+            this.stopBtn.Location = new System.Drawing.Point(174, 281);
             this.stopBtn.Name = "stopBtn";
-            this.stopBtn.Size = new System.Drawing.Size(120, 26);
+            this.stopBtn.Size = new System.Drawing.Size(120, 58);
             this.stopBtn.TabIndex = 31;
             this.stopBtn.Text = "Stop";
             this.stopBtn.UseVisualStyleBackColor = true;
@@ -234,81 +232,16 @@
             this.massBox.Size = new System.Drawing.Size(120, 22);
             this.massBox.TabIndex = 29;
             // 
-            // aflowBox
-            // 
-            this.aflowBox.Location = new System.Drawing.Point(174, 245);
-            this.aflowBox.Name = "aflowBox";
-            this.aflowBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.aflowBox.Size = new System.Drawing.Size(120, 22);
-            this.aflowBox.TabIndex = 28;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(6, 248);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(128, 16);
-            this.label32.TabIndex = 27;
-            this.label32.Text = "Actual Flow Rate:";
-            // 
-            // uncrtBtn
-            // 
-            this.uncrtBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uncrtBtn.Location = new System.Drawing.Point(6, 365);
-            this.uncrtBtn.Name = "uncrtBtn";
-            this.uncrtBtn.Size = new System.Drawing.Size(291, 26);
-            this.uncrtBtn.TabIndex = 26;
-            this.uncrtBtn.Text = "Calculate Uncertainty";
-            this.uncrtBtn.UseVisualStyleBackColor = true;
-            this.uncrtBtn.Click += new System.EventHandler(this.uncrtBtn_Click);
-            // 
             // startBtn
             // 
             this.startBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startBtn.Location = new System.Drawing.Point(3, 301);
+            this.startBtn.Location = new System.Drawing.Point(174, 217);
             this.startBtn.Name = "startBtn";
-            this.startBtn.Size = new System.Drawing.Size(165, 26);
+            this.startBtn.Size = new System.Drawing.Size(120, 58);
             this.startBtn.TabIndex = 25;
             this.startBtn.Text = "Start";
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
-            // 
-            // uncrBox
-            // 
-            this.uncrBox.Location = new System.Drawing.Point(174, 273);
-            this.uncrBox.Name = "uncrBox";
-            this.uncrBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.uncrBox.Size = new System.Drawing.Size(120, 22);
-            this.uncrBox.TabIndex = 24;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 276);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(145, 16);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "System Uncertainty:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 220);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(87, 16);
-            this.label10.TabIndex = 22;
-            this.label10.Text = "Total Time:";
-            // 
-            // tmeBox
-            // 
-            this.tmeBox.Location = new System.Drawing.Point(174, 217);
-            this.tmeBox.Name = "tmeBox";
-            this.tmeBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tmeBox.Size = new System.Drawing.Size(120, 22);
-            this.tmeBox.TabIndex = 21;
             // 
             // label9
             // 
@@ -421,9 +354,9 @@
             // snsrBtn
             // 
             this.snsrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.snsrBtn.Location = new System.Drawing.Point(3, 333);
+            this.snsrBtn.Location = new System.Drawing.Point(6, 217);
             this.snsrBtn.Name = "snsrBtn";
-            this.snsrBtn.Size = new System.Drawing.Size(165, 26);
+            this.snsrBtn.Size = new System.Drawing.Size(165, 58);
             this.snsrBtn.TabIndex = 0;
             this.snsrBtn.Text = "Get Sensor Readings";
             this.snsrBtn.UseVisualStyleBackColor = true;
@@ -440,6 +373,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.thermBox);
             this.groupBox1.Controls.Add(this.nflowBox);
             this.groupBox1.Controls.Add(this.label33);
             this.groupBox1.Controls.Add(this.secBox);
@@ -451,11 +385,9 @@
             this.groupBox1.Controls.Add(this.label25);
             this.groupBox1.Controls.Add(this.maxfBox);
             this.groupBox1.Controls.Add(this.minfBox);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.stdBox);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -466,9 +398,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Calibration Information";
             // 
+            // thermBox
+            // 
+            this.thermBox.Location = new System.Drawing.Point(181, 191);
+            this.thermBox.Name = "thermBox";
+            this.thermBox.Size = new System.Drawing.Size(113, 22);
+            this.thermBox.TabIndex = 40;
+            // 
             // nflowBox
             // 
-            this.nflowBox.Location = new System.Drawing.Point(181, 163);
+            this.nflowBox.Location = new System.Drawing.Point(181, 131);
             this.nflowBox.Name = "nflowBox";
             this.nflowBox.Size = new System.Drawing.Size(113, 22);
             this.nflowBox.TabIndex = 39;
@@ -477,7 +416,7 @@
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label33.Location = new System.Drawing.Point(6, 164);
+            this.label33.Location = new System.Drawing.Point(6, 132);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(142, 16);
             this.label33.TabIndex = 38;
@@ -496,9 +435,9 @@
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.Location = new System.Drawing.Point(6, 224);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(143, 16);
+            this.label29.Size = new System.Drawing.Size(131, 16);
             this.label29.TabIndex = 31;
-            this.label29.Text = "Duration (seconds):";
+            this.label29.Text = "Time Elapsed (s):";
             // 
             // calDate
             // 
@@ -539,7 +478,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(6, 194);
+            this.label25.Location = new System.Drawing.Point(6, 162);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(169, 16);
             this.label25.TabIndex = 26;
@@ -547,76 +486,52 @@
             // 
             // maxfBox
             // 
-            this.maxfBox.Location = new System.Drawing.Point(181, 135);
+            this.maxfBox.Location = new System.Drawing.Point(181, 103);
             this.maxfBox.Name = "maxfBox";
             this.maxfBox.Size = new System.Drawing.Size(113, 22);
             this.maxfBox.TabIndex = 8;
             // 
             // minfBox
             // 
-            this.minfBox.Location = new System.Drawing.Point(181, 107);
+            this.minfBox.Location = new System.Drawing.Point(181, 75);
             this.minfBox.Name = "minfBox";
             this.minfBox.Size = new System.Drawing.Size(113, 22);
             this.minfBox.TabIndex = 7;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(246, 76);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(48, 20);
-            this.radioButton2.TabIndex = 6;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "g/h";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(185, 76);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(55, 20);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "ml/h";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 136);
+            this.label3.Location = new System.Drawing.Point(6, 104);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(149, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Maximum Flow Rate:";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 194);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(145, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Thermal Expansion:";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 108);
+            this.label2.Location = new System.Drawing.Point(6, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Minimum Flow Rate:";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 78);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 16);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Units of Measurement:";
-            // 
             // stdBox
             // 
             this.stdBox.FormattingEnabled = true;
-            this.stdBox.Location = new System.Drawing.Point(181, 191);
+            this.stdBox.Location = new System.Drawing.Point(181, 159);
             this.stdBox.Name = "stdBox";
             this.stdBox.Size = new System.Drawing.Size(113, 24);
             this.stdBox.TabIndex = 25;
@@ -1087,15 +1002,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox maxfBox;
         private System.Windows.Forms.TextBox minfBox;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button snsrBtn;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox tmeBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -1108,9 +1020,6 @@
         private System.Windows.Forms.TextBox tempBox2;
         private System.Windows.Forms.TextBox tempBox1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox uncrBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel8;
@@ -1159,9 +1068,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.TextBox secBox;
-        private System.Windows.Forms.Button uncrtBtn;
-        private System.Windows.Forms.TextBox aflowBox;
-        private System.Windows.Forms.Label label32;
         private System.Windows.Forms.TextBox nflowBox;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.DataGridView rdDataGrid;
@@ -1174,5 +1080,7 @@
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.Button clearBtn;
         private System.Windows.Forms.Timer sensorTimer;
+        private System.Windows.Forms.TextBox thermBox;
+        private System.Windows.Forms.Button prntBtn;
     }
 }

@@ -106,18 +106,6 @@ namespace Calibration_Interface
             button4.BackColor = Color.LightBlue;
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Set_Time timeFrm = new Set_Time();
-            timeFrm.Show();
-
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
             Customer_Form cusFrm = new Customer_Form();
@@ -147,18 +135,6 @@ namespace Calibration_Interface
         {
             string info4 = "Select pump 4 for calibration.";
             textBox1.Text = info4;
-        }
-
-        private void button5_MouseHover(object sender, EventArgs e)
-        {
-            string info5 = "Pumps the water from the beaker back into the external liquid container";
-            textBox1.Text = info5;
-        }
-
-        private void button6_MouseHover(object sender, EventArgs e)
-        {
-            string info6 = "Set the total time duration during which calibration for each pump takes place.";
-            textBox1.Text = info6;
         }
 
         private void button7_MouseHover(object sender, EventArgs e)

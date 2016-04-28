@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Data;
 using System.IO.Ports;
 using System.Linq;
@@ -21,10 +22,6 @@ namespace Calibration_Interface
         SqlCommandBuilder combuilder;
 
         string connectionString1;
-
-        //SerialPort port1 = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
-        //SerialPort port2 = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
-
 
         public Calibration_Interface1()
         {
@@ -81,87 +78,42 @@ namespace Calibration_Interface
 
         private void insertData()
         {
-            string Query2 = "INSERT INTO DataSet(Mass, Nominal_Flow_Rate, Actual_Flow_Rate, Uncertainty) VALUES (@mass, @nflow, @aflow, @uncr)";
+            string Query1 = "INSERT INTO DataSet" +
+                "(Mass, Temperature_Liquid, Temperature_Ambient, Humidity)" +
+                "VALUES (@mass, @temp_l, @temp_A, @humid)";
                         
             using (connection = new SqlConnection(connectionString1))
-            using (command = new SqlCommand(Query2, connection))
+            using (command = new SqlCommand(Query1, connection))
             {
                 connection.Open();
 
                 command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;                
-                command.Parameters.Add("@time", SqlDbType.NVarChar, 50).Value = secBox.Text;
-                command.Parameters.Add("@nflow", SqlDbType.NVarChar, 50).Value = nflowBox.Text;
-                command.Parameters.Add("@aflow", SqlDbType.NVarChar, 50).Value = aflowBox.Text;
-                command.Parameters.Add("@uncr", SqlDbType.NVarChar, 50).Value = uncrBox.Text;
-            
+                command.Parameters.Add("@temp_l", SqlDbType.NVarChar, 50).Value = tempBox1.Text;
+                command.Parameters.Add("@temp_A", SqlDbType.NVarChar, 50).Value = tempairBox1.Text;
+                command.Parameters.Add("@humid", SqlDbType.NVarChar, 50).Value = humidBox1.Text;
+
                 command.ExecuteNonQuery();
             }
-                        
-        }
 
-        private void captureSensorData(object s, EventArgs e)
-        {
-            //String sensorData = port1.ReadLine().ToString();
-            //String[] sensorTempHumid = sensorData.Split(',');
-
-            //var temp1 = sensorTempHumid[0];
-            //var temp2 = sensorTempHumid[1];
-            //var temp3 = sensorTempHumid[2];
-            //var humid1 = sensorTempHumid[3];
-            //var humid2 = sensorTempHumid[4];
-
-            //try
-            //{
-            //    if (port1.IsOpen)
-            //    {
-            //        tempBox1.Text = temp1.ToString();
-            //        tempairBox1.Text = temp2.ToString();
-            //        tempairBox2.Text = temp3.ToString();
-            //        humidBox1.Text = humid1.ToString();
-            //        humidBox2.Text = humid2.ToString();
-            //    }
-            //}
-            //catch (IndexOutOfRangeException ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    throw new ArgumentOutOfRangeException(ex.Message);
-            //}
-        }
-
-        private void captureMassData(object s, EventArgs e)
-        {
-            //var massData = port2.ReadLine();
-            //try
-            //{
-            //    if (!string.IsNullOrEmpty(massData))
-            //    {
-            //        massBox.Text = massData.ToString();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            Calculations();
+            FlowRate();            
         }
 
         private void port1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            //Invoke(new EventHandler(captureSensorData));
             Invoke(new EventHandler(sensorTimer_Tick));
         }
 
         private void port2_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            //Invoke(new EventHandler(captureMassData));
             Invoke(new EventHandler(massTimer_Tick));
         }
         private void populate_rdDataGrid()
         {
-            string Query3 = "SELECT * FROM DataSet";
+            string Query2 = "SELECT * FROM DataSet";
 
             using (connection = new SqlConnection(connectionString1))
-            using (adapter = new SqlDataAdapter(Query3, connection))
+            using (adapter = new SqlDataAdapter(Query2, connection))
             using (combuilder = new SqlCommandBuilder(adapter))
             {
                 DataSet ds = new DataSet();
@@ -190,10 +142,10 @@ namespace Calibration_Interface
 
         private void PopulateTextBoxes()
         {
-            string Query2 = "SELECT * FROM CustomerInfo WHERE [Customer_Name]='" + cstBox1.Text + "' ";
+            string Query3 = "SELECT * FROM CustomerInfo WHERE [Customer_Name]='" + cstBox1.Text + "' ";
             using (connection = new SqlConnection(connectionString1))
             {
-                command = new SqlCommand(Query2, connection);
+                command = new SqlCommand(Query3, connection);
                 connection.Open();
 
                 reader = command.ExecuteReader();
@@ -227,11 +179,11 @@ namespace Calibration_Interface
 
         private void clearBtn_Click(object sender, EventArgs e)
         {
-            string Query3 = "TRUNCATE TABLE DataSet";
+            string Query4 = "TRUNCATE TABLE DataSet";
 
             using (connection = new SqlConnection(connectionString1))
             {
-                command = new SqlCommand(Query3, connection);
+                command = new SqlCommand(Query4, connection);
                 connection.Open();
 
                 command.ExecuteNonQuery();
@@ -259,14 +211,13 @@ namespace Calibration_Interface
         private void massTimer_Tick(object sender, EventArgs e)
         {
             massTimer.Interval = 1000;
-
             var massData = port2.ReadLine();
+
             try
             {
                 if (!string.IsNullOrEmpty(massData))
                 {
                     massBox.Text = massData.ToString();
-
                 }
             }
             catch (Exception ex)
@@ -286,16 +237,18 @@ namespace Calibration_Interface
             var temp1 = sensorTempHumid[0];
             var temp2 = sensorTempHumid[1];
             var temp3 = sensorTempHumid[2];
-            var humid1 = sensorTempHumid[3];
-            var humid2 = sensorTempHumid[4];
+            var temp4 = sensorTempHumid[3];
+            var humid1 = sensorTempHumid[4];
+            var humid2 = sensorTempHumid[5];
 
             try
             {
                 if (port1.IsOpen)
                 {
                     tempBox1.Text = temp1.ToString();
-                    tempairBox1.Text = temp2.ToString();
-                    tempairBox2.Text = temp3.ToString();
+                    tempBox2.Text = temp2.ToString();
+                    tempairBox1.Text = temp3.ToString();
+                    tempairBox2.Text = temp4.ToString();
                     humidBox1.Text = humid1.ToString();
                     humidBox2.Text = humid2.ToString();
                 }
@@ -313,6 +266,147 @@ namespace Calibration_Interface
             
             insertData();
             populate_rdDataGrid();
+        }
+
+        private void Calculations()
+        {
+            //  Water Density Equation  //
+            //                          //
+            int l = 1;                  //
+            int m = 2;                  //  Integer Power Values
+            int n = 3;                  //
+
+            double a1 = -3.983035;                             //
+            double a2 = 301.797;                               //
+            double a3 = 522528.9;                              //
+            double a4 = 69.34881;                              //
+            double a5 = 0.999974950;                           //
+            double tempLiquid1 = Double.Parse(tempBox1.Text);  //
+
+            double elm1 = Math.Pow((tempLiquid1 + a1), 2);
+            double elm2 = tempLiquid1 + a2;
+            double elm3 = tempLiquid1 + a4;
+
+            double density_l = a5 * (1 - ((elm1 * elm2) / (a3 * elm3)));
+
+            //  Air Density Equation  //
+            //                        //
+            double k1 = 3.4844 * Math.Pow(10, -4);
+            double k2 = -2.52 * Math.Pow(10, -6);
+            double k3 = 2.0582 * Math.Pow(10, -5);
+            double pA = 1000;
+            double humidityAmb1 = Double.Parse(humidBox1.Text) * 0.01;
+            double tempAmb1 = Double.Parse(tempairBox1.Text);
+
+            double elm5 = k1 * pA;
+            double elm6 = humidityAmb1 * ((k2 * tempAmb1) + k3);
+
+            double density_a = (elm5 + elm6) / (tempAmb1 + 273.15);
+
+            //  Volume Calculation  //
+            //                      //
+            double mass = Double.Parse(massBox.Text);
+            double therm = Double.Parse(thermBox.Text);
+            double templiquid2 = 20;
+
+            double elm7 = 1 / (density_l - density_a);
+            double elm8 = 1 - (density_a / 8);
+            double elm9 = 1 - therm * (tempLiquid1 - templiquid2);
+
+            double Vol = mass * elm7 * elm8 * elm9;
+
+            string Query5 = "UPDATE DataSet SET Mass = @mass, Volume = @vol WHERE Mass = @mass";
+            
+            using (connection = new SqlConnection(connectionString1))
+            using (command = new SqlCommand(Query5, connection))
+
+            {
+                connection.Open();
+
+                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
+                command.Parameters.Add("@vol", SqlDbType.Decimal, 18).Value = Vol;
+
+                command.ExecuteNonQuery();
+            }                        
+        }
+
+        private void FlowRate()
+        {
+            string Query6 = "SELECT Volume/Time AS 'Actual_Flow_Rate' FROM DataSet WHERE Mass = @mass";
+
+            using (connection = new SqlConnection(connectionString1))
+            using (command = new SqlCommand(Query6, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private void prntBtn_Click(object sender, EventArgs e)
+        {
+            PrintDocument print= new PrintDocument();
+            print.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1170);
+            print.PrintPage += new PrintPageEventHandler(Print_Page);
+            print.Print();
+
+        }
+
+        private void Print_Page (object sender, PrintPageEventArgs e)
+        {
+            int t = 0;
+            int i = 0;
+            int width = rdDataGrid.Columns[0].Width;
+            int height = rdDataGrid.Rows[0].Height;
+
+            if (t < 2)
+            {
+                e.Graphics.DrawString("Medical Calibration Systems Ltd.", new Font("Arial", 18, FontStyle.Bold), Brushes.Black, 25, 100);
+                e.Graphics.DrawString("[Company Address Here]", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, 25, 130);
+                e.Graphics.DrawString("[Phone Number Here]", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 155);
+                e.Graphics.DrawString("[Fax Number Here]", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 170, 155);
+                e.Graphics.DrawString("[Email Here]", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 175);
+                e.Graphics.DrawLine(Pens.Black, 20, 200, 807, 200);
+
+                e.Graphics.DrawString("Customer Name: " + nmeBox1.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 210);
+                e.Graphics.DrawString("Address: [" + addrsBox1.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 230);
+                e.Graphics.DrawString("[" + addrsBox2.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 75, 250);
+                e.Graphics.DrawString("[" + addrsBox3.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 75, 270);
+                e.Graphics.DrawString("Phone Number: " + phneBox1.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 290);
+                e.Graphics.DrawString("Email: " + emailBox1.Text.ToString(), new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 25, 310);
+
+                while (i < rdDataGrid.Rows.Count)
+                {
+                    int rowheight = rdDataGrid.Rows[i].Height;
+                    int colwidth = rdDataGrid.Columns[0].Width;
+
+                    if (height > e.MarginBounds.Height)
+                    {
+                        height = 100;
+                        width = 100;
+                        e.HasMorePages = true;
+
+                        return;
+                    }
+
+                    height += rowheight;
+
+                    e.Graphics.DrawRectangle(Pens.Black, 20, 230 + height, colwidth, rowheight);
+
+                    e.Graphics.DrawString(rdDataGrid.Rows[i].Cells[0].FormattedValue.ToString(),
+                    rdDataGrid.Font, Brushes.Black, new RectangleF(20, 230 + height, colwidth, rowheight));
+
+                    e.Graphics.DrawRectangle(Pens.Black, 20 + colwidth, height, colwidth, rowheight);
+
+                    e.Graphics.DrawString(rdDataGrid.Rows[i].Cells[1].Value.ToString(),
+                        rdDataGrid.Font, Brushes.Black, new RectangleF(20 + colwidth,
+                        230 + height, width, rowheight));
+                    width += colwidth;
+                    i++;
+                }                    
+            }
         }
     }
 }
