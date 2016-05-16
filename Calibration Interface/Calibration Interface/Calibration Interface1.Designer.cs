@@ -32,6 +32,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.TimeLabel = new System.Windows.Forms.Label();
             this.prntBtn = new System.Windows.Forms.Button();
             this.clearBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
@@ -116,6 +118,9 @@
             this.port2 = new System.IO.Ports.SerialPort(this.components);
             this.dataTimer = new System.Windows.Forms.Timer(this.components);
             this.sensorTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label10 = new System.Windows.Forms.Label();
+            this.imassBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -153,6 +158,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.imassBox);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.TimeLabel);
             this.groupBox2.Controls.Add(this.prntBtn);
             this.groupBox2.Controls.Add(this.clearBtn);
             this.groupBox2.Controls.Add(this.stopBtn);
@@ -181,12 +190,31 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sensor Readings and Calibration Controls";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(9, 446);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 35;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // TimeLabel
+            // 
+            this.TimeLabel.AutoSize = true;
+            this.TimeLabel.Location = new System.Drawing.Point(116, 449);
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(52, 16);
+            this.TimeLabel.TabIndex = 34;
+            this.TimeLabel.Text = "label10";
+            // 
             // prntBtn
             // 
             this.prntBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prntBtn.Location = new System.Drawing.Point(6, 281);
+            this.prntBtn.Location = new System.Drawing.Point(6, 279);
             this.prntBtn.Name = "prntBtn";
-            this.prntBtn.Size = new System.Drawing.Size(165, 58);
+            this.prntBtn.Size = new System.Drawing.Size(165, 28);
             this.prntBtn.TabIndex = 33;
             this.prntBtn.Text = "Print Report";
             this.prntBtn.UseVisualStyleBackColor = true;
@@ -195,9 +223,9 @@
             // clearBtn
             // 
             this.clearBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearBtn.Location = new System.Drawing.Point(174, 345);
+            this.clearBtn.Location = new System.Drawing.Point(174, 313);
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(120, 58);
+            this.clearBtn.Size = new System.Drawing.Size(120, 28);
             this.clearBtn.TabIndex = 32;
             this.clearBtn.Text = "Clear Table";
             this.clearBtn.UseVisualStyleBackColor = true;
@@ -206,9 +234,9 @@
             // stopBtn
             // 
             this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopBtn.Location = new System.Drawing.Point(174, 281);
+            this.stopBtn.Location = new System.Drawing.Point(174, 279);
             this.stopBtn.Name = "stopBtn";
-            this.stopBtn.Size = new System.Drawing.Size(120, 58);
+            this.stopBtn.Size = new System.Drawing.Size(120, 28);
             this.stopBtn.TabIndex = 31;
             this.stopBtn.Text = "Stop";
             this.stopBtn.UseVisualStyleBackColor = true;
@@ -218,7 +246,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(6, 192);
+            this.label30.Location = new System.Drawing.Point(6, 220);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(117, 16);
             this.label30.TabIndex = 30;
@@ -226,7 +254,7 @@
             // 
             // massBox
             // 
-            this.massBox.Location = new System.Drawing.Point(174, 189);
+            this.massBox.Location = new System.Drawing.Point(174, 217);
             this.massBox.Name = "massBox";
             this.massBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.massBox.Size = new System.Drawing.Size(120, 22);
@@ -235,9 +263,9 @@
             // startBtn
             // 
             this.startBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startBtn.Location = new System.Drawing.Point(174, 217);
+            this.startBtn.Location = new System.Drawing.Point(174, 245);
             this.startBtn.Name = "startBtn";
-            this.startBtn.Size = new System.Drawing.Size(120, 58);
+            this.startBtn.Size = new System.Drawing.Size(120, 28);
             this.startBtn.TabIndex = 25;
             this.startBtn.Text = "Start";
             this.startBtn.UseVisualStyleBackColor = true;
@@ -354,9 +382,9 @@
             // snsrBtn
             // 
             this.snsrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.snsrBtn.Location = new System.Drawing.Point(6, 217);
+            this.snsrBtn.Location = new System.Drawing.Point(6, 245);
             this.snsrBtn.Name = "snsrBtn";
-            this.snsrBtn.Size = new System.Drawing.Size(165, 58);
+            this.snsrBtn.Size = new System.Drawing.Size(165, 28);
             this.snsrBtn.TabIndex = 0;
             this.snsrBtn.Text = "Get Sensor Readings";
             this.snsrBtn.UseVisualStyleBackColor = true;
@@ -963,6 +991,28 @@
             // 
             this.sensorTimer.Tick += new System.EventHandler(this.sensorTimer_Tick);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 192);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(90, 16);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "Initial Mass:";
+            // 
+            // imassBox
+            // 
+            this.imassBox.Location = new System.Drawing.Point(174, 189);
+            this.imassBox.Name = "imassBox";
+            this.imassBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.imassBox.Size = new System.Drawing.Size(120, 22);
+            this.imassBox.TabIndex = 36;
+            // 
             // Calibration_Interface1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1082,5 +1132,10 @@
         private System.Windows.Forms.Timer sensorTimer;
         private System.Windows.Forms.TextBox thermBox;
         private System.Windows.Forms.Button prntBtn;
+        private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox imassBox;
     }
 }

@@ -55,7 +55,7 @@ namespace Calibration_Interface
                 MessageBox.Show(ex1.Message);
             }
 
-            port2.PortName = "COM7";
+            port2.PortName = "COM5";
             port2.BaudRate = 9600;
             port2.Parity = Parity.None;
             port2.StopBits = StopBits.One;
@@ -74,29 +74,25 @@ namespace Calibration_Interface
                 MessageBox.Show(ex2.Message);
             }
 
+            secBox.Text = "0";
         }
 
         private void insertData()
         {
-            string Query1 = "INSERT INTO DataSet" +
-                "(Mass, Temperature_Liquid, Temperature_Ambient, Humidity)" +
-                "VALUES (@mass, @temp_l, @temp_A, @humid)";
+            string Query1 = "INSERT INTO DataSet(Time, Mass) VALUES (@time, @mass)";
                         
             using (connection = new SqlConnection(connectionString1))
             using (command = new SqlCommand(Query1, connection))
             {
                 connection.Open();
 
-                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;                
-                command.Parameters.Add("@temp_l", SqlDbType.NVarChar, 50).Value = tempBox1.Text;
-                command.Parameters.Add("@temp_A", SqlDbType.NVarChar, 50).Value = tempairBox1.Text;
-                command.Parameters.Add("@humid", SqlDbType.NVarChar, 50).Value = humidBox1.Text;
+                command.Parameters.Add("@time", SqlDbType.NVarChar, 50).Value = secBox.Text;
+                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
 
                 command.ExecuteNonQuery();
             }
 
-            Calculations();
-            FlowRate();            
+            Calculations();        
         }
 
         private void port1_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -168,13 +164,19 @@ namespace Calibration_Interface
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+
+            imassBox.Text = massBox.Text;
+
             Invoke(new EventHandler(dataTimer_Tick));
+
+            dataTimer.Enabled = true;
             dataTimer.Start();
         }
         
         private void stopBtn_Click(object sender, EventArgs e)
         {
             dataTimer.Stop();
+            timer1.Stop();
         }
 
         private void clearBtn_Click(object sender, EventArgs e)
@@ -260,12 +262,23 @@ namespace Calibration_Interface
             }
         }
 
+        int mil = 0;
         private void dataTimer_Tick(object sender, EventArgs e)
         {
             dataTimer.Interval = 1000;
-            
+
+            secBox.Text = mil.ToString();
+            mil++;
+
             insertData();
             populate_rdDataGrid();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            timer1.Interval = 100;
+
         }
 
         private void Calculations()
@@ -276,44 +289,46 @@ namespace Calibration_Interface
             int m = 2;                  //  Integer Power Values
             int n = 3;                  //
 
-            double a1 = -3.983035;                             //
-            double a2 = 301.797;                               //
-            double a3 = 522528.9;                              //
-            double a4 = 69.34881;                              //
-            double a5 = 0.999974950;                           //
-            double tempLiquid1 = Double.Parse(tempBox1.Text);  //
+            decimal a1 = -3.983035m;                             //
+            decimal a2 = 301.797m;                               //
+            decimal a3 = 522528.9m;                              //
+            decimal a4 = 69.34881m;                              //
+            decimal a5 = 0.999974950m;                           //
+            decimal tempLiquid1 = Decimal.Parse(tempBox1.Text);  //
 
-            double elm1 = Math.Pow((tempLiquid1 + a1), 2);
-            double elm2 = tempLiquid1 + a2;
-            double elm3 = tempLiquid1 + a4;
+            decimal elm1 = (tempLiquid1 + a1) * (tempLiquid1 + a1);
+            decimal elm2 = tempLiquid1 + a2;
+            decimal elm3 = tempLiquid1 + a4;
 
-            double density_l = a5 * (1 - ((elm1 * elm2) / (a3 * elm3)));
+            decimal density_l = a5 * (1 - ((elm1 * elm2) / (a3 * elm3)));
 
             //  Air Density Equation  //
             //                        //
-            double k1 = 3.4844 * Math.Pow(10, -4);
-            double k2 = -2.52 * Math.Pow(10, -6);
-            double k3 = 2.0582 * Math.Pow(10, -5);
-            double pA = 1000;
-            double humidityAmb1 = Double.Parse(humidBox1.Text) * 0.01;
-            double tempAmb1 = Double.Parse(tempairBox1.Text);
+            decimal k1 = 3.4844m * (10 * 10 * 10 * 10);
+            decimal k2 = -2.52m * (1 / (10 * 10 * 10 * 10 * 10 * 10));
+            decimal k3 = 2.0582m * (1 / (10 * 10 * 10 * 10 * 10));
+            decimal pA = 1000;
+            decimal humidityAmb1 = Decimal.Parse(humidBox1.Text) * 0.01m;
+            decimal tempAmb1 = Decimal.Parse(tempairBox1.Text);
 
-            double elm5 = k1 * pA;
-            double elm6 = humidityAmb1 * ((k2 * tempAmb1) + k3);
+            decimal elm5 = k1 * pA;
+            decimal elm6 = humidityAmb1 * ((k2 * tempAmb1) + k3);
 
-            double density_a = (elm5 + elm6) / (tempAmb1 + 273.15);
+            decimal density_a = (elm5 + elm6) / (tempAmb1 + 273.15m);
 
             //  Volume Calculation  //
             //                      //
-            double mass = Double.Parse(massBox.Text);
-            double therm = Double.Parse(thermBox.Text);
-            double templiquid2 = 20;
+            decimal imass = Decimal.Parse(imassBox.Text);
+            decimal fmass = Decimal.Parse(massBox.Text);
+            decimal therm = Decimal.Parse(thermBox.Text);
+            decimal templiquid2 = 20;
 
-            double elm7 = 1 / (density_l - density_a);
-            double elm8 = 1 - (density_a / 8);
-            double elm9 = 1 - therm * (tempLiquid1 - templiquid2);
+            decimal Mass = fmass - imass;
+            decimal elm7 = 1 / (density_l - density_a);
+            decimal elm8 = 1 - (density_a / 8);
+            decimal elm9 = 1 - therm * (tempLiquid1 - templiquid2);
 
-            double Vol = mass * elm7 * elm8 * elm9;
+            decimal Vol = Mass * elm7 * elm8 * elm9;
 
             string Query5 = "UPDATE DataSet SET Mass = @mass, Volume = @vol WHERE Mass = @mass";
             
@@ -327,22 +342,27 @@ namespace Calibration_Interface
                 command.Parameters.Add("@vol", SqlDbType.Decimal, 18).Value = Vol;
 
                 command.ExecuteNonQuery();
-            }                        
-        }
-
-        private void FlowRate()
-        {
-            string Query6 = "SELECT Volume/Time AS 'Actual_Flow_Rate' FROM DataSet WHERE Mass = @mass";
-
-            using (connection = new SqlConnection(connectionString1))
-            using (command = new SqlCommand(Query6, connection))
-            {
-                connection.Open();
-
-                command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
-
-                command.ExecuteNonQuery();
             }
+
+            //  Flow Rate Calculation  //
+            //                         //
+            decimal time = Decimal.Parse(secBox.Text);
+
+            if (time != 0)
+            {
+                decimal flow = Vol / time;
+
+                string Query6 = "UPDATE DataSet SET Mass = @mass, Actual_Flow_Rate = @aflow WHERE Mass = @mass";
+
+                using (connection = new SqlConnection(connectionString1))
+                using (command = new SqlCommand(Query6, connection))
+                {
+                    connection.Open();
+                    command.Parameters.Add("@mass", SqlDbType.NVarChar, 50).Value = massBox.Text;
+                    command.Parameters.Add("@aflow", SqlDbType.Decimal, 18).Value = flow;
+                    command.ExecuteNonQuery();
+                }
+            }            
         }
 
         private void prntBtn_Click(object sender, EventArgs e)
@@ -407,6 +427,12 @@ namespace Calibration_Interface
                     i++;
                 }                    
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+            timer1.Start();
         }
     }
 }
